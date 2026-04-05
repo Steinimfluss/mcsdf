@@ -43,8 +43,8 @@ public class McsdfClient implements ClientModInitializer {
 	            	    		compiled = true;
             	    		}
             	    		
-							McsdfFonts.arial = McsdfFont.builder().atlas(id("msdffont/arial/atlas.png")).metadata(id("msdffont/arial/atlas.json")).build();
-							McsdfFonts.calibri = McsdfFont.builder().atlas(id("msdffont/calibri/atlas.png")).metadata(id("msdffont/calibri/atlas.json")).build();
+							McsdfFonts.ARIAL = McsdfFont.builder().atlas(id("msdffont/arial/atlas.png")).metadata(id("msdffont/arial/atlas.json")).build();
+							McsdfFonts.CALIBRI = McsdfFont.builder().atlas(id("msdffont/calibri/atlas.png")).metadata(id("msdffont/calibri/atlas.json")).build();
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
