@@ -2,7 +2,9 @@
 	"required": true,
 	"package": "io.github.mcsdf.client.mixin",
 	"compatibilityLevel": "JAVA_25",
-	"client": [],
+	"client": [
+		"AbstractTextureAccessor"
+	],
 	"injectors": {
 		"defaultRequire": 1
 	},
