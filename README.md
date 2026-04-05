@@ -13,4 +13,6 @@ fr.renderStringScaled(graphics, McsdfFonts.ARIAL, "Scaled text", 40, 60, 300);
 fr.drawCenteredString(graphics, McsdfFonts.ARIAL, "Centered", width / 2f, height / 2f);
 ```
 
-MSDF allow for rendering of text at all scales
+MSDF allow for rendering of text at all scales. Here are some examples:
+
+![Showcase](docs/showcase.png)
