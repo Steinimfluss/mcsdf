@@ -4,7 +4,7 @@ import io.github.mcsdf.client.render.McsdfPipelines;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 public class McsdfFontRenderer {
-    public void renderStringScaled(GuiGraphicsExtractor graphics, McsdfFont font, String text, float x, float y, float scalePercent) {
+    public void renderStringScaled(GuiGraphicsExtractor graphics, McsdfFont font, String text, float x, float y, float scalePercent, int color) {
         float s = scalePercent / 100f;
 
         graphics.pose().pushMatrix();
@@ -13,12 +13,12 @@ public class McsdfFontRenderer {
 
         graphics.pose().scale(s, s);
 
-        renderString(graphics, font, text, 0, 0);
+        renderString(graphics, font, text, 0, 0, color);
 
         graphics.pose().popMatrix();
     }
 
-    public void drawCenteredStringScaled(GuiGraphicsExtractor graphics, McsdfFont font, String text, float x, float y, float scalePercent) {
+    public void drawCenteredStringScaled(GuiGraphicsExtractor graphics, McsdfFont font, String text, float x, float y, float scalePercent, int color) {
         float s = scalePercent / 100f;
 
         float width  = getWidth(font, text, scalePercent);
@@ -32,12 +32,12 @@ public class McsdfFontRenderer {
         float drawX     = -width  / 2f;
         float baselineY = -height / 2f;
 
-        renderString(graphics, font, text, drawX, baselineY);
+        renderString(graphics, font, text, drawX, baselineY, color);
 
         graphics.pose().popMatrix();
     }
     
-    public void renderChar(GuiGraphicsExtractor graphics, McsdfFont font, char c, float x, float y) {
+    public void renderChar(GuiGraphicsExtractor graphics, McsdfFont font, char c, float x, float y, int color) {
         var glyph = font.getGlyph(c);
         if (glyph == null || glyph.atlasBounds == null || glyph.planeBounds == null) {
             return;
@@ -64,11 +64,12 @@ public class McsdfFontRenderer {
             (int) quadWidth,
             (int) quadHeight,
             font.metadata.atlas.width,
-            font.metadata.atlas.height
+            font.metadata.atlas.height,
+            color
         );
     }
 
-    public void renderString(GuiGraphicsExtractor graphics, McsdfFont font, String text, float x, float y) {
+    public void renderString(GuiGraphicsExtractor graphics, McsdfFont font, String text, float x, float y, int color) {
         float cursorX = x;
         float scale   = (float) font.metadata.atlas.size;
 
@@ -86,7 +87,7 @@ public class McsdfFontRenderer {
                 cursorX += (float) (font.getKerning(prev, c) * scale);
             }
 
-            renderChar(graphics, font, c, cursorX, baselineY);
+            renderChar(graphics, font, c, cursorX, baselineY, color);
 
             cursorX += (float) (glyph.advance * scale);
             prev = c;
@@ -134,13 +135,13 @@ public class McsdfFontRenderer {
         return base * (scalePercent / 100f);
     }
 
-    public void drawCenteredString(GuiGraphicsExtractor graphics, McsdfFont font, String text, float x, float y) {
+    public void drawCenteredString(GuiGraphicsExtractor graphics, McsdfFont font, String text, float x, float y, int color) {
         float width  = getWidth(font, text);
         float height = getHeight(font, text);
 
         float drawX     = (float) (x - width  / 2f);
         float baselineY = (float) (y - height / 2f);
 
-        renderString(graphics, font, text, drawX, baselineY);
+        renderString(graphics, font, text, drawX, baselineY, color);
     }
 }
