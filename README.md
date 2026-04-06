@@ -9,7 +9,7 @@ McsdfFontRenderer fr = new McsdfFontRenderer();
 
 fr.renderString(graphics, McsdfFonts.ARIAL, "Hello", 20, 20, -1);
 fr.renderStringScaled(graphics, McsdfFonts.ARIAL, "Scaled text", 40, 60, 300, Color.red.getRGB());
-fr.drawCenteredString(graphics, McsdfFonts.ARIAL, "Centered", width / 2f, height / 2f, Color.blue.getRGB());
+fr.renderCenteredString(graphics, McsdfFonts.ARIAL, "Centered", width / 2f, height / 2f, Color.blue.getRGB());
 ```
 
 MSDF allow for rendering of text at all scales. Here are some examples:
