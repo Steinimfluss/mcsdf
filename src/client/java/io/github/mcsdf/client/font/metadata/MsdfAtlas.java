@@ -4,7 +4,7 @@ public class MsdfAtlas {
     public String type;
     public double distanceRange;
     public double distanceRangeMiddle;
-    public int size;
+    public double size;
     public int width;
     public int height;
     public String yOrigin;
