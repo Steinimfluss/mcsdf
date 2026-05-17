@@ -1,6 +1,6 @@
 package io.github.mcsdf.client.font.metadata;
 
-public class MsdfPlaneBounds {
+public class PlaneBounds {
     public double left;
     public double bottom;
     public double right;

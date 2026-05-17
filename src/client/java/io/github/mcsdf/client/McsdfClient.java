@@ -5,8 +5,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 import io.github.mcsdf.Mcsdf;
-import io.github.mcsdf.client.font.McsdfFont;
-import io.github.mcsdf.client.font.McsdfFonts;
+import io.github.mcsdf.client.font.DefaultFonts;
+import io.github.mcsdf.client.font.Font;
 import io.github.mcsdf.client.render.McsdfPipelines;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.impl.resource.ResourceLoaderImpl;
@@ -15,13 +15,12 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 
 public class McsdfClient implements ClientModInitializer {
-	private boolean compiled;
-	
 	@Override
 	public void onInitializeClient() {
 		ResourceLoaderImpl.get(PackType.CLIENT_RESOURCES)
         .registerReloadListener(
             Identifier.fromNamespaceAndPath(Mcsdf.MOD_ID, "font"),
+            
             new PreparableReloadListener() {
             	@Override
             	public CompletableFuture<Void> reload(
@@ -38,22 +37,16 @@ public class McsdfClient implements ClientModInitializer {
 
             	    return barrier.thenRunAsync(() -> {
             	    	try {
-            	    		if(!compiled) {
-	            	    		McsdfPipelines.precompile();
-	            	    		compiled = true;
-            	    		}
-            	    		
-							McsdfFonts.ARIAL = McsdfFont.builder().atlas(id("msdffont/arial/atlas.png")).metadata(id("msdffont/arial/atlas.json")).build();
-							McsdfFonts.CALIBRI = McsdfFont.builder().atlas(id("msdffont/calibri/atlas.png")).metadata(id("msdffont/calibri/atlas.json")).build();
+            	    		McsdfPipelines.precompile();
+							DefaultFonts.ARIAL = Font.builder().atlas(id("fonts/arial/atlas.png")).metadata(id("fonts/arial/atlas.json")).build();
+							DefaultFonts.CALIBRI = Font.builder().atlas(id("fonts/calibri/atlas.png")).metadata(id("fonts/calibri/atlas.json")).build();
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
             	    }, reloadExecutor);
             	}
-
             }
         );
-		
 	}
 	
 	public Identifier id(String path) {

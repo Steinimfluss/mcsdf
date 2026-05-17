@@ -9,27 +9,27 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.textures.AddressMode;
 import com.mojang.blaze3d.textures.FilterMode;
 
-import io.github.mcsdf.client.font.metadata.MsdfFontMetadata;
-import io.github.mcsdf.client.font.metadata.MsdfGlyph;
+import io.github.mcsdf.client.font.metadata.FontMetadata;
+import io.github.mcsdf.client.font.metadata.Glyph;
 import io.github.mcsdf.client.mixin.AbstractTextureAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.resources.Identifier;
 
-public class McsdfFont {
+public class Font {
 	private static final Minecraft mc = Minecraft.getInstance();
 	private static final Gson gson = new Gson();
 	
     public final Identifier texture;
-    public final MsdfFontMetadata metadata;
+    public final FontMetadata metadata;
 
     private final java.util.Map<Long, Double> kerningMap = new java.util.HashMap<>();
     
-    private McsdfFont(Identifier atlasTexture, Identifier fontMetadata) throws JsonSyntaxException, IOException {
+    private Font(Identifier atlasTexture, Identifier fontMetadata) throws JsonSyntaxException, IOException {
         this.texture = atlasTexture;
         
         var resource = mc.getResourceManager().getResource(fontMetadata).orElseThrow();
-        this.metadata = gson.fromJson(new String(resource.open().readAllBytes()), MsdfFontMetadata.class);
+        this.metadata = gson.fromJson(new String(resource.open().readAllBytes()), FontMetadata.class);
         
         if (metadata.kerning != null) {
             for (var k : metadata.kerning) {
@@ -53,9 +53,9 @@ public class McsdfFont {
     	mc.getTextureManager().register(texture, dynamic);
     }
     
-    public MsdfGlyph getGlyph(char c) {
+    public Glyph getGlyph(char c) {
         int codepoint = c;
-        for (MsdfGlyph g : metadata.glyphs) {
+        for (Glyph g : metadata.glyphs) {
             if (g.unicode == codepoint) return g;
         }
         return null;
@@ -80,14 +80,14 @@ public class McsdfFont {
             return this;
         }
 
-        public McsdfFont build() throws JsonSyntaxException, IOException {
+        public Font build() throws JsonSyntaxException, IOException {
             if (atlasTexture == null)
                 throw new IllegalStateException("McsdfFontBuilder: atlas texture is required");
 
             if (fontMetadata == null)
                 throw new IllegalStateException("McsdfFontBuilder: font metadata is required");
 
-            return new McsdfFont(atlasTexture, fontMetadata);
+            return new Font(atlasTexture, fontMetadata);
         }
     }
 

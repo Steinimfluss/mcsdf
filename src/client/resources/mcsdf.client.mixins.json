@@ -3,7 +3,8 @@
 	"package": "io.github.mcsdf.client.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"client": [
-		"AbstractTextureAccessor"
+		"AbstractTextureAccessor",
+		"TitleScreenMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

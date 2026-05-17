@@ -1,6 +1,6 @@
 package io.github.mcsdf.client.font.metadata;
 
-public class MsdfAtlas {
+public class Atlas {
     public String type;
     public double distanceRange;
     public double distanceRangeMiddle;

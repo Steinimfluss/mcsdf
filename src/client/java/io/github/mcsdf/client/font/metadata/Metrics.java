@@ -1,6 +1,6 @@
 package io.github.mcsdf.client.font.metadata;
 
-public class MsdfMetrics {
+public class Metrics {
     public double emSize;
     public double lineHeight;
     public double ascender;
